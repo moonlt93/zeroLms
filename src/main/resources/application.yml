@@ -1,1 +1,27 @@
-
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/zero
+    username: zero
+    password: 1234
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: moonlt932@gmail.com
+    password: cyexhpaedcpgznvq
+    properties:
+      mail:
+       smtp:
+         starttls:
+            enable: true
+logging:
+    level:
+      root: info

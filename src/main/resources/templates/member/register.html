@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+<h1> 회원가입 </h1>
+<!--
+//아이디
+//이름
+// 전화번호
+// 비밀번호
+-->
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<form method="post">
+<div>
+    <input type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
+</div>
+<div>
+    <input type="text" name="userName" placeholder="이름 입력" required/>
+</div>
+<div>
+    <input type="text" name="password" placeholder="비밀번호 입력" required/>
+</div><div>
+    <input type="text" name="rePassword" placeholder="비밀번호 확인" required/>
+</div>
+<div>
+    <input type="text" name="phone" placeholder="전화번호 입력" required/>
+</div>
+    <div>
+        <button name="registerFormBtn">회원가입하기</button>
+    </div>
+</form>
+
+
+</body>
+</html>
