@@ -76,6 +76,11 @@ public class MemberServiceImpl implements MemberService {
         }
 
         Member member = optionalMember.get();
+
+        if(member.isEmailAuthYn()){
+            return false;
+        }
+
         member.setEmailAuthYn(true);
         member.setEmailAuthDt(LocalDateTime.now());
         memberRepository.save(member);
@@ -83,28 +88,7 @@ public class MemberServiceImpl implements MemberService {
         return true;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<Member> optionalMember = memberRepository.findById(username);
-
-        if(!optionalMember.isPresent()){
-            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
-        }
-        Member member =optionalMember.get();
-
-        if(!member.isEmailAuthYn()){
-            throw new MemberNotEmailAuthException("이메일 활성화 이후에 로그인해주세요. ");
-        }
-
-        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-
-        grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-
-        return new User(member.getUserId(),member.getPassword(),grantedAuthorityList);
-
-    }
 
     @Override
     public boolean sendResetPassword(ResetPasswordInput parameter){
@@ -180,6 +164,30 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        Optional<Member> optionalMember = memberRepository.findById(username);
+
+        if(!optionalMember.isPresent()){
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+        Member member =optionalMember.get();
+
+        if(!member.isEmailAuthYn()){
+            throw new MemberNotEmailAuthException("이메일 활성화 이후에 로그인해주세요. ");
+        }
+
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+
+        grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        if(member.isAdminYn()){
+            grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+
+        return new User(member.getUserId(),member.getPassword(),grantedAuthorityList);
+
+    }
 
 }

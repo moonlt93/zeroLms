@@ -36,7 +36,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
        http.csrf().disable();
-
+        http.authorizeRequests()
+                .antMatchers("/admin/**")
+                .hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests()
                 .antMatchers(
                         "/"
@@ -57,6 +59,9 @@ public class SecurityConfiguration {
 
 
                 .and().headers().frameOptions().sameOrigin();
+
+        http.exceptionHandling().accessDeniedPage("/error/denied");
+
         return http.build();
     }
 

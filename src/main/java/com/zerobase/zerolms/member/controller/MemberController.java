@@ -1,9 +1,7 @@
 package com.zerobase.zerolms.member.controller;
 
-import com.zerobase.zerolms.member.entity.Member;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
-import com.zerobase.zerolms.member.repository.MemberRepository;
 import com.zerobase.zerolms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -84,6 +82,7 @@ public class MemberController {
 
         String uuid = req.getParameter("id");
         System.out.println(uuid);
+
 
         boolean result = memberService.emailAuth(uuid);
         model.addAttribute("result",result);

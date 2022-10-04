@@ -27,7 +27,7 @@ public class MainController {
     @RequestMapping(value = "/")
     public String index() {
 
-        String email ="moonlt932@gmail.com";
+    /*    String email ="moonlt932@gmail.com";
         String subject ="안녕하세요. 제로베이스 문진수 입니다.";
         String text=
                 "<p>안녕하세요</p>"+
@@ -36,10 +36,14 @@ public class MainController {
 
         mailComponents.sendMail(email,subject,text);
 
-
+*/
         return "index";
         //파일명으로 매핑되도록 thmleaf가 약속함.
 
+    }
+    @RequestMapping("/error/denied")
+    public String errorDenied(){
+        return"error/denied";
     }
 
 
