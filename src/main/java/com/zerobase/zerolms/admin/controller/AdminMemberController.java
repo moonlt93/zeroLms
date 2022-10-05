@@ -1,15 +1,15 @@
-package com.zerobase.zerolms.admin;
+package com.zerobase.zerolms.admin.controller;
 
 import com.zerobase.zerolms.admin.dto.MemberDto;
+import com.zerobase.zerolms.admin.model.MemberAdInput;
 import com.zerobase.zerolms.admin.model.MemberParam;
-import com.zerobase.zerolms.member.entity.Member;
 import com.zerobase.zerolms.member.service.MemberService;
 import com.zerobase.zerolms.util.PageUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -50,6 +50,22 @@ public class AdminMemberController {
 
         return "admin/member/detail";
     }
+    @PostMapping("/admin/member/status")
+    public String status(Model model, MemberAdInput param){
 
+       boolean result= memberService.updateStatus(param.getUserStatus(),param.getUserId());
+
+
+        return "redirect:/admin/member/detail?userId="+param.getUserId();
+    }
+
+    @PostMapping("/admin/member/password")
+    public String updatePassword(Model model, MemberAdInput param){
+
+        boolean result= memberService.updatePassword(param.getUserId(),param.getPassword());
+
+
+        return "redirect:/admin/member/detail?userId="+param.getUserId();
+    }
 
 }
