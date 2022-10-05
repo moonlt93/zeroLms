@@ -1,12 +1,14 @@
 package com.zerobase.zerolms.member.service;
 
+import com.zerobase.zerolms.admin.dto.MemberDto;
+import com.zerobase.zerolms.admin.model.MemberParam;
+import com.zerobase.zerolms.member.entity.Member;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
-import com.zerobase.zerolms.member.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public interface MemberService extends UserDetailsService {
@@ -35,4 +37,12 @@ public interface MemberService extends UserDetailsService {
     * @param uuid
     * */
     boolean checkResetPassword(String uuid);
+
+
+    /* 회원 목록 확인(관리자용);
+    * */
+    List<MemberDto> list(MemberParam param);
+
+    //*회원 상세 정보*/
+    MemberDto detail(String userId);
 }
