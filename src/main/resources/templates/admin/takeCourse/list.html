@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>수강 관리</title>
+    <style>
+        .list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: solid 1px #000;
+        }
+
+        p.nothing {
+            text-align: center;
+            padding: 100px;
+        }
+
+        .pager {
+            text-align: center;
+        }
+
+        .pager a.on {
+            font-weight: bold;
+            color: red;
+        }
+
+        .list .buttons {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .list .buttons a, .buttons button {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 14px;
+            line-height: 20px;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
+        .list .row_buttons{
+            text-align: center;
+
+        }
+        .list .buttons .total-count {
+            /*   position: absolute;
+               top: 0;
+               right: 0;*/
+            text-align: right;
+
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.row_buttons button').on('click', function () {
+
+                var status =$(this).val();
+                var id =$(this).closest('div').find('input[name=id]').val();
+                //closest 상위태그로 올라가서 구성된 속성을  찾는다
+
+
+                var msg = status == 'COMPLETE' ? '결재완료하시겠습니까 ?' : ' 수강취소 처리하시겠습니까?';
+                if(!confirm(msg)){
+                    return false;
+                }
+
+                var $process= $('#proForm');
+                $process.find('input[name=id]').val(id);
+                $process.find('input[name=status]').val(status);
+                $process.submit();
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+<hr/>
+<h1>강좌 관리</h1>
+
+<div class="list">
+    <div class="buttons">
+        <p class="total-count">전체<span th:text="${totalCount}"></span>개</p>
+
+    </div>
+    <table>
+        <thead>
+        <tr>
+
+            <td>
+                NO
+            </td>
+            <td>
+                등록일
+            </td>
+            <td>
+                강좌명
+            </td>
+            <td colspan="3">
+                신청인
+            </td>
+            <td>
+                상태
+            </td>
+            <th>
+                비고
+            </th>
+
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="x : ${list}">
+
+            <td th:text="${x.seq}"></td>
+
+            <td>
+                <p th:text="${x.regDtText}"></p>
+            </td>
+            <td>
+                <a th:text="${x.subject}">강좌명</a>
+            </td>
+            <th>
+                <p th:text="${x.userName}"></p>
+            </th>
+            <th>
+                <p th:text="${x.userId}"></p>
+            </th>
+            <th>
+                <p th:text="${x.phone}"></p>
+            </th>
+            <td>
+
+                <p th:if="${x.status eq 'REQ'}">수강신청</p>
+                <p th:if="${x.status eq 'COMPLETE'}">결재완료</p>
+                <p th:if="${x.status eq 'CANCEL'}">수강취소</p>
+            </td>
+            <td>
+                <div class="row_buttons" th:if="${x.status eq 'REQ'}">
+                <input type="hidden" name="id" th:value="${x.id}"/>
+                <button value="COMPLETE" type="button"> 결재완료처리</button>
+                <button value="CANCEL" type="button"> 수강취소처리</button>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <div class="pager" th:utext="${pager}">
+    </div>
+
+</div>
+<form name="proForm" id="proForm" method="post"
+      action="/admin/takeCourse/status">
+    <input type="hidden" name="id"/>
+    <input type="hidden" name="status"/>
+</form>
+
+</body>
+</html>
+
