@@ -4,6 +4,7 @@ import com.zerobase.zerolms.admin.dto.CategoryDto;
 import com.zerobase.zerolms.admin.model.CategoryInput;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.admin.service.CategoryService;
+import com.zerobase.zerolms.course.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-public class AdminCategoryController {
+public class AdminCategoryController  {
 
     private final CategoryService categoryService;
 
@@ -35,6 +36,20 @@ public class AdminCategoryController {
 
 
             return"redirect:/admin/category/list";
+    }
 
+    @PostMapping("/admin/category/delete")
+    public String del(Model model, CategoryInput param){
+
+      boolean result=  categoryService.del(param.getId());
+      return "redirect:/admin/category/list";
+    }
+
+    @PostMapping("/admin/category/update")
+    public String update(Model model, CategoryInput param){
+        System.out.println(param.isUsingYn());
+
+        boolean result=  categoryService.update(param);
+        return "redirect:/admin/category/list";
     }
 }

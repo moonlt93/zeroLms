@@ -2,8 +2,10 @@
 <!-- mapper DTD 선언 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zerobase.zerolms.admin.mapper.MemberMapper">
+<mapper namespace="com.zerobase.zerolms.course.mapper.CourseMapper">
+
     <sql id="selectListWhere">
+
         <if test="searchType != null and searchValue != null">
             <choose>
                 <when test="searchType == 'userId'">
@@ -30,20 +32,20 @@
 
     </sql>
 
+
     <select id="selectListCount" resultType="long">
         select count(*)
-        from member
+        from course
         where 1 = 1
         <include refid="selectListWhere"/>
     </select>
 
-    <select id="selectList"
-            resultType="com.zerobase.zerolms.admin.dto.MemberDto">
+    <select id="selectList" resultType="com.zerobase.zerolms.course.dto.CourseDto">
         select *
-        from member
+        from course
         where 1 = 1
         <include refid="selectListWhere"/>
-
+        order by reg_dt desc
         limit #{pageStart}, #{pageEnd}
     </select>
 

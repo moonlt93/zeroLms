@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberController  {
 
    private final MemberService memberService;
 

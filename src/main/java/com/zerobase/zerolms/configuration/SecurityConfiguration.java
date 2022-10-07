@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @RequiredArgsConstructor
 @EnableWebSecurity(debug = true)
@@ -36,6 +38,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
        http.csrf().disable();
+       http.headers().frameOptions().sameOrigin();
         http.authorizeRequests()
                 .antMatchers("/admin/**")
                 .hasAnyAuthority("ROLE_ADMIN");
@@ -73,6 +76,14 @@ public class SecurityConfiguration {
     }
 
 
+    @Configuration
+    public static class WebConfig extends WebMvcConfigurationSupport {
 
+        @Override
+        protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+            super.addResourceHandlers(registry);
+        }
+    }
 
 }

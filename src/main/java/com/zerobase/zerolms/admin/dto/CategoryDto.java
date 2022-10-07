@@ -20,6 +20,8 @@ Long id;
 String categoryName;
 int sortValue;
 boolean usingYn;
+/*add column*/
+ int courseCount;
 
 public static List<CategoryDto> of(List<Category> categories){
 
