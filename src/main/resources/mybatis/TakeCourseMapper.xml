@@ -6,6 +6,9 @@
 
     <sql id="selectListWhere">
 
+        <if test="searchCourseId > 0">
+            and c.id = #{searchCourseId}
+        </if>
 
     </sql>
 
@@ -30,5 +33,16 @@
         order by reg_dt desc
         limit #{pageStart}, #{pageEnd}
     </select>
+
+
+    <select id="selectListMyCourse" resultType="com.zerobase.zerolms.course.dto.TakeCourseDto">
+        select tc.*
+                ,c.subject
+        from take_course tc
+        join course c on tc.course_id=c.id
+        where tc.user_id=#{userId}
+        order by reg_dt desc
+    </select>
+
 
 </mapper>

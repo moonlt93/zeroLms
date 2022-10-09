@@ -15,6 +15,8 @@ public interface TakeCourseMapper {
     List<TakeCourseDto> selectList(TakeCourseParam param);
     long selectListCount(TakeCourseParam param);
 
+    List<TakeCourseDto> selectListMyCourse(TakeCourseParam param);
+
 
 
 }

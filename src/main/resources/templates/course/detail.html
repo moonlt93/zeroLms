@@ -32,7 +32,7 @@
                 axios.post(url,parameter).then(function (response){
                    //post 다음 then을 이용해서 결과를 처리한다.
                     //체이닝
-                    console.log(response);
+
 
                     response.data = response.date || {};
                     response.data.header = response.data.header || {};
@@ -75,10 +75,11 @@
         <form id="submitForm" method="post">
         <input type="hidden" name="id" th:value="${detail.id}"/>
         <button type="submit">수강신청하기</button>
-        <a href="/course">강좌목록</a>
         </form>
     </div>
-
+<div>
+    <a href="/course">강좌목록</a>
+</div>
 </div>
 
 

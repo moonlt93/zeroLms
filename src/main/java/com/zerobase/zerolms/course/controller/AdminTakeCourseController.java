@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -61,11 +62,10 @@ public class AdminTakeCourseController extends BaseController {
             return "common/error";
         }
 
-
-
         return "redirect:/admin/takeCourse/list";
-
     }
+
+
 
 
 }

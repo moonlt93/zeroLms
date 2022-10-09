@@ -9,5 +9,6 @@ public class TakeCourseInput extends CommonParam {
  long courseId;
  String userId;
 
+ long  takeCourseId;
 
 }

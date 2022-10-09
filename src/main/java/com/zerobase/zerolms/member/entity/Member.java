@@ -38,4 +38,9 @@ public class Member implements MemberCode {
     private boolean adminYn;
     private String userStatus;
 
+    /*다음*/
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
+
 }

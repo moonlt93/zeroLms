@@ -4,6 +4,7 @@ import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.admin.mapper.MemberMapper;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.components.MailComponents;
+import com.zerobase.zerolms.course.model.ServiceResult;
 import com.zerobase.zerolms.member.entity.Member;
 import com.zerobase.zerolms.member.entity.MemberCode;
 import com.zerobase.zerolms.member.exception.MemberNotEmailAuthException;
@@ -265,4 +266,52 @@ public class MemberServiceImpl implements MemberService {
         return true;
 
     }
+
+    @Override
+    public ServiceResult updateMemberPassword(MemberInput param) {
+
+        String userId= param.getUserId();
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if(!optionalMember.isPresent()){
+           return new ServiceResult(false,"회원정보가 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        if(!BCrypt.checkpw(param.getPassword(),member.getPassword())){
+            return  new ServiceResult(false,"비밀번호가 일치하지 않습니다.");
+        }
+        System.out.println(param.getPassword());
+
+        String encPassword = BCrypt.hashpw(param.getNewPassword(),BCrypt.gensalt());
+        member.setPassword(encPassword);
+        memberRepository.save(member);
+
+
+        return new ServiceResult(true);
+    }
+
+    @Override
+    public ServiceResult updateMember(MemberInput param) {
+
+        String userId= param.getUserId();
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if(!optionalMember.isPresent()){
+            return new ServiceResult(false,"회원정보가 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        member.setPhone(param.getPhone());
+        member.setZipcode(param.getZipcode());
+        member.setAddr(param.getAddr());
+        member.setAddrDetail(param.getAddrDetail());
+        member.setUdtDt(LocalDateTime.now());
+        memberRepository.save(member);
+
+        return new ServiceResult(true);
+
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.zerobase.zerolms.course.dto;
 
+import com.zerobase.zerolms.course.entity.TakeCourse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +42,18 @@ public class TakeCourseDto {
     public String getRegDtText(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd MM:mm");
         return regDt != null ? regDt.format(formatter) : "";
+    }
+
+    public static TakeCourseDto of(TakeCourse x){
+
+        return TakeCourseDto.builder()
+                .id(x.getId())
+                .courseId(x.getCourseId())
+                .userId(x.getUserId())
+                .payPrice(x.getPayPrice())
+                .status(x.getStatus())
+                .regDt(x.getRegDt())
+                .build();
     }
 
 }
