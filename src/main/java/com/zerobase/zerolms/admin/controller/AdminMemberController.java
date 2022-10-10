@@ -4,6 +4,8 @@ import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.admin.model.MemberAdInput;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.course.controller.BaseController;
+import com.zerobase.zerolms.main.dto.HistoryDto;
+import com.zerobase.zerolms.main.service.LogHistoryService;
 import com.zerobase.zerolms.member.service.MemberService;
 import com.zerobase.zerolms.util.PageUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AdminMemberController extends BaseController {
 
     private final MemberService memberService;
+    private final LogHistoryService logHistoryService;
 
     @GetMapping("/admin/member/list")
     public String list(Model model, MemberParam parameter) {
@@ -47,8 +50,10 @@ public class AdminMemberController extends BaseController {
         param.init();
 
         MemberDto member = memberService.detail(param.getUserId());
+        System.out.println("param :"+param.getUserId());
+        List <HistoryDto>  history = logHistoryService.frontList(param.getUserId());
         model.addAttribute("member", member);
-
+        model.addAttribute("history",history);
         return "admin/member/detail";
     }
     @PostMapping("/admin/member/status")

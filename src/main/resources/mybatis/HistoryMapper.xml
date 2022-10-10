@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerobase.zerolms.main.mapper.HistoryMapper">
+
+
+    <select id="selectListCount" resultType="long">
+        select count(*)
+        from loginHistory
+        where userId = #{userId}
+
+    </select>
+
+    <select id="selectFullList" parameterType="String" resultType="com.zerobase.zerolms.main.dto.HistoryDto" >
+        select
+            row_number() over (order by con_date asc) as NO,
+               con_date,
+                user_ag,
+                user_id,
+                user_ip
+        from login_History
+        where user_id = #{userId}
+        ORDER BY con_date DESC
+
+
+
+    </select>
+
+
+</mapper>

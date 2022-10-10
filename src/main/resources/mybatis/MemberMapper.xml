@@ -3,6 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zerobase.zerolms.admin.mapper.MemberMapper">
+
     <sql id="selectListWhere">
         <if test="searchType != null and searchValue != null">
             <choose>
@@ -39,12 +40,14 @@
 
     <select id="selectList"
             resultType="com.zerobase.zerolms.admin.dto.MemberDto">
-        select *
-        from member
-        where 1 = 1
-        <include refid="selectListWhere"/>
 
-        limit #{pageStart}, #{pageEnd}
+        select m.*,max(lh.con_date) from member as m left join login_history lh on m.user_id = lh.user_id
+        group by m.user_id union
+        select m.*,max(lh.con_date) from member as m right join login_history lh on m.user_id = lh.user_id
+        group by m.user_id
+        order by reg_dt desc
+
     </select>
+
 
 </mapper>

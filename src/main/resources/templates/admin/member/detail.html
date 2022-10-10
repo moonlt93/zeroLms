@@ -13,6 +13,16 @@
         .detail table th, .detail table td {
             border: solid 1px #000;
         }
+        .log table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .log table tr, .detail table td {
+            border: solid 1px #000;
+            text-align: center;
+            padding-top: 10px;
+        }
     </style>
 
 </head>
@@ -99,6 +109,29 @@
         </tr>
 
         </tbody>
+    </table>
+</div>
+<hr/>
+    <a href="/admin/member/list">목록으로이동</a>
+<div>
+</div>
+<div class="log">
+    <table>
+        <thead>
+            <th>NO</th>
+            <th>마지막로그인일자</th>
+            <th>접속IP</th>
+            <th>접속UserAgent</th>
+        </thead>
+        <tbody>
+        <tr th:each="x: ${history}">
+        <td th:text="${x.NO}"></td>
+        <td th:text="${x.conDate}"></td>
+        <td th:text="${x.userIp}"></td>
+        <td th:text="${x.userAg}"></td>
+        </tr>
+        </tbody>
+
     </table>
 
 

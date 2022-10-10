@@ -9,16 +9,28 @@ package com.zerobase.zerolms.main.controller;
 // 클래스 , 속성, 메소드 ?
 
 import com.zerobase.zerolms.components.MailComponents;
+import com.zerobase.zerolms.main.dto.HistoryDto;
+import com.zerobase.zerolms.main.service.LogHistoryService;
+import com.zerobase.zerolms.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class MainController {
-
 
 
     private final MailComponents mailComponents;
@@ -27,25 +39,17 @@ public class MainController {
     @RequestMapping(value = "/")
     public String index() {
 
-    /*    String email ="moonlt932@gmail.com";
-        String subject ="안녕하세요. 제로베이스 문진수 입니다.";
-        String text=
-                "<p>안녕하세요</p>"+
-                "<p>반갑습니다.</p>"
-                ;
 
-        mailComponents.sendMail(email,subject,text);
 
-*/
         return "index";
-        //파일명으로 매핑되도록 thmleaf가 약속함.
+
 
     }
+
     @RequestMapping("/error/denied")
-    public String errorDenied(){
-        return"error/denied";
+    public String errorDenied() {
+        return "error/denied";
     }
-
 
 
 }
@@ -80,3 +84,14 @@ public class MainController {
         writer.close();
 
     }*/
+
+   /*    String email ="moonlt932@gmail.com";
+        String subject ="안녕하세요. 제로베이스 문진수 입니다.";
+        String text=
+                "<p>안녕하세요</p>"+
+                "<p>반갑습니다.</p>"
+                ;
+
+        mailComponents.sendMail(email,subject,text);
+
+*/

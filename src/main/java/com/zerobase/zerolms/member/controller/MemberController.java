@@ -4,11 +4,12 @@ import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.course.dto.TakeCourseDto;
 import com.zerobase.zerolms.course.model.ServiceResult;
 import com.zerobase.zerolms.course.service.TakeCourseService;
+import com.zerobase.zerolms.main.service.LogHistoryService;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
 import com.zerobase.zerolms.member.service.MemberService;
-import com.zerobase.zerolms.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,20 +23,22 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
     private final TakeCourseService takeCourseService;
-
+    private final LogHistoryService logHistoryService;
 
     @RequestMapping("/member/login")
     public String login() {
 
-        System.out.println("get");
+
 
         return "member/login";
 
     }
+
 
     @GetMapping("/member/find/password")
     public String findPassword() {
@@ -211,9 +214,9 @@ public class MemberController {
 
         String userId = principal.getName();
 
-      ServiceResult result =  memberService.withdraw(userId,param.getPassword());
-        if(!result.isResult()){
-            model.addAttribute("message",result.getMessage());
+        ServiceResult result = memberService.withdraw(userId, param.getPassword());
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
             return "common/error";
         }
 

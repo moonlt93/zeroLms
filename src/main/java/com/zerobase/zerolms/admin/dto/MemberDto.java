@@ -41,6 +41,7 @@ public class MemberDto {
     long seq;
 
     String userStatus;
+    String conDate;
 
     public static MemberDto of(Member member) {
 
