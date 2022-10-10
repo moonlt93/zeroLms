@@ -61,6 +61,8 @@ public class CourseServiceImpl implements CourseService {
         course.setSubject(param.getSubject());
         course.setSaleEndDt(saleEndDt);
         course.setUdtDt(LocalDateTime.now());
+        course.setFileName(param.getFileName());
+        course.setUrlFileName(param.getUrlFileName());
         courseRepository.save(course);
 
        return true;
@@ -81,6 +83,8 @@ public class CourseServiceImpl implements CourseService {
                 .subject(param.getSubject())
                 .regDt(LocalDateTime.now())
                 .saleEndDt(saleEndDt)
+                .fileName(param.getFileName())
+                .urlFileName(param.getUrlFileName())
                 //종료일
                 .build();
 
@@ -158,11 +162,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseDto frontDetail(long id) {
 
-       Optional<Course> OptionalCourseDetail= courseRepository.findById(id);
-       if(OptionalCourseDetail.isPresent()){
-           return CourseDto.of(OptionalCourseDetail.get());
-       }
-
+        Optional<Course> optionalCourse = courseRepository.findById(id);
+        if (optionalCourse.isPresent()) {
+            return CourseDto.of(optionalCourse.get());
+        }
         return null;
     }
 
@@ -209,7 +212,12 @@ public class CourseServiceImpl implements CourseService {
        return result;
     }
 
+    @Override
+    public List<CourseDto> listAll() {
 
 
+        List<Course> courseList= courseRepository.findAll();
+        return CourseDto.of(courseList);
 
+    }
 }

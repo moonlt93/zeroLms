@@ -32,4 +32,7 @@ public interface CourseService {
 
     /*수강신청 */
     ServiceResult req(TakeCourseInput param);
+
+    /*전체 강좌 정보*/
+    List<CourseDto> listAll();
 }

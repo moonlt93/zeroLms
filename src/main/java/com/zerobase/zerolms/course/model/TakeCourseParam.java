@@ -10,6 +10,6 @@ long id;
 String status;
 String userId;
 
-    long searchCourseId;
+long searchCourseId;
 
 }

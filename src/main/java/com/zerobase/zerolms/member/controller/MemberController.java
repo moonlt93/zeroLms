@@ -7,6 +7,7 @@ import com.zerobase.zerolms.course.service.TakeCourseService;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
 import com.zerobase.zerolms.member.service.MemberService;
+import com.zerobase.zerolms.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +22,14 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MemberController  {
+public class MemberController {
 
-   private final MemberService memberService;
-   private final TakeCourseService takeCourseService;
+    private final MemberService memberService;
+    private final TakeCourseService takeCourseService;
 
 
     @RequestMapping("/member/login")
-    public String login(){
+    public String login() {
 
         System.out.println("get");
 
@@ -37,7 +38,7 @@ public class MemberController  {
     }
 
     @GetMapping("/member/find/password")
-    public String findPassword(){
+    public String findPassword() {
 
         System.out.println("get");
 
@@ -47,35 +48,36 @@ public class MemberController  {
 
     @PostMapping("/member/find/password")
     public String findPasswordSubmit(
-            Model model ,
-            ResetPasswordInput input){
+            Model model,
+            ResetPasswordInput input) {
 
         System.out.println("post");
         boolean result = false;
-        try{
-         result = memberService.sendResetPassword(input);
-        }catch (Exception e){
+        try {
+            result = memberService.sendResetPassword(input);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
         return "member/find_password_result";
 
     }
 
     @GetMapping("/member/register")
-    public String register(){
+    public String register() {
 
         System.out.println("get");
 
         return "member/register";
 
     }
+
     @PostMapping("/member/register")
-    public String registerSubmit(Model model, MemberInput parameter){
+    public String registerSubmit(Model model, MemberInput parameter) {
         System.out.println("post");
 
         boolean result = memberService.register(parameter);
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
 
         System.out.println("parameter = " + parameter.toString());
 
@@ -84,7 +86,7 @@ public class MemberController  {
 
 
     @GetMapping("/member/email-auth")
-    public String emailAuth(Model model,HttpServletRequest req){
+    public String emailAuth(Model model, HttpServletRequest req) {
 
 
         String uuid = req.getParameter("id");
@@ -92,7 +94,7 @@ public class MemberController  {
 
 
         boolean result = memberService.emailAuth(uuid);
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
 
         return "member/email_auth";
 
@@ -102,47 +104,48 @@ public class MemberController  {
     @GetMapping("/member/reset/password")
     public String memberResetPassword(
             HttpServletRequest request
-            ,Model model){
+            , Model model) {
 
         String uuid = request.getParameter("id");
 
         boolean result = memberService.checkResetPassword(uuid);
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
 
         return "member/reset_password";
     }
 
     @PostMapping("/member/reset/password")
-    public String resetPasswordSubmit(ResetPasswordInput input, Model model){
+    public String resetPasswordSubmit(ResetPasswordInput input, Model model) {
 
 
         boolean result = false;
-        try{
+        try {
 
-        result= memberService.resetPassword(input.getId(),input.getPassword());
+            result = memberService.resetPassword(input.getId(), input.getPassword());
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
 
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
         return "member/reset_password_result";
     }
+
     @GetMapping("/member/info")
-    public String memberInfo(Model model, Principal principal){
+    public String memberInfo(Model model, Principal principal) {
 
-        String userId= principal.getName();
+        String userId = principal.getName();
 
-       MemberDto detail= memberService.detail(userId);
+        MemberDto detail = memberService.detail(userId);
 
-       model.addAttribute("detail",detail);
+        model.addAttribute("detail", detail);
         return "member/info";
 
     }
 
     @PostMapping("/member/info")
-    public String memberInfo(Model model,MemberInput param, Principal principal){
+    public String memberInfo(Model model, MemberInput param, Principal principal) {
 
         String userId = principal.getName();
         param.setUserId(userId);
@@ -154,6 +157,7 @@ public class MemberController  {
         }
         return "redirect:/member/info";
     }
+
     @GetMapping("/member/password")
     public String memberPassword(Model model, Principal principal) {
 
@@ -164,6 +168,7 @@ public class MemberController  {
 
         return "member/password";
     }
+
     @PostMapping("/member/password")
     public String memberPasswordSubmit(Model model
             , MemberInput parameter
@@ -182,7 +187,7 @@ public class MemberController  {
     }
 
     @GetMapping("/member/MytakeCourse")
-    public String memberTakeCourse(Model model, Principal principal){
+    public String memberTakeCourse(Model model, Principal principal) {
 
         String userId = principal.getName();
         List<TakeCourseDto> list = takeCourseService.myCourse(userId);
@@ -193,11 +198,35 @@ public class MemberController  {
     }
 
 
+    @GetMapping("/member/withdraw")
+    public String memberWithdraw(Model model, Principal principal) {
 
+        return "member/withdraw";
+    }
+
+    @PostMapping("/member/withdraw")
+    public String memberWithdrawSubmit(Model model
+            , Principal principal
+            , MemberInput param) {
+
+        String userId = principal.getName();
+
+      ServiceResult result =  memberService.withdraw(userId,param.getPassword());
+        if(!result.isResult()){
+            model.addAttribute("message",result.getMessage());
+            return "common/error";
+        }
+
+
+        return "redirect:/member/logout";
+    }
 }
+
+
+
 /*
-* http:// www.naver.com/root/idser ?id=123
-* https://
-* 프로토콜 //도메인 // 경로 Path
-*
-* */
+ * http:// www.naver.com/root/idser ?id=123
+ * https://
+ * 프로토콜 //도메인 // 경로 Path
+ *
+ * */

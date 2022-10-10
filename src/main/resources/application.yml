@@ -22,6 +22,10 @@ spring:
        smtp:
          starttls:
             enable: true
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
 logging:
     level:
       root: info
