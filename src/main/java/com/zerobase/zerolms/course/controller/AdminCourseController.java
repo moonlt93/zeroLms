@@ -96,6 +96,7 @@ public class AdminCourseController extends BaseController{
         if(file != null){
 
             String originalFileName = file.getOriginalFilename();
+            System.out.println(originalFileName);
 
             String baseLocalPath="C:\\zero\\Ultimate\\zeroLms\\src\\main\\resources\\static\\files";
             String baseUrlPath="/files";

@@ -4,18 +4,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+
 </head>
+<style>
+    img{
+        width: 500px;
+        height: 300px;
+    }
+    * {
+        box-sizing: border-box;
+    }
+
+    .carousel-wrapper {
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .carousel-wrapper > .carousel {
+        display: flex;
+        transform: translate3d(0, 0, 0);
+        transition: transform 0.2s;
+    }
+
+    .carousel-wrapper > .carousel > img {
+        width: 500px;
+        height: 300px;
+    }
+
+</style>
 <body>
 <h1> index.page</h1>
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
-<p>
 
-        <span> <a href="/admin/main">관리자페이지</a></span>
-
-    <div>
-    <img src="/files/2022/10/10/201711060912547465_2.jpg"/>
+<div class="home__slider">
+<div class="carousel-wrapper">
+    <div class="carousel">
+   <p th:each="x : ${home__slider}">
+        <img  th:src="@{${x.bannerLink}}"  alt="첨부이미지" th:if="${x.sortValues == '1'}"/>
+        <img  th:src="@{${x.bannerLink}}"  alt="첨부이미지" th:if="${x.sortValues == '2'}"/>
+        <img  th:src="@{${x.bannerLink}}"  alt="첨부이미지" th:if="${x.sortValues == '3'}"/>
+   </p>
     </div>
-</p>
-<p>안녕하세요>?</p>
+</div>
+</div>
+<button class="prev" type="button"><img src="static/css/left.png"/>prev</button>
+<button class="next" type="button"><img src="static/css/right.png"/>next</button>
+
+<script>
+    $(function() {
+
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const carousel = document.querySelector('.carousel');
+
+    let index = 0;
+
+    prevButton.addEventListener('click',function()  {
+        if (index === 0) return;
+        index -= 1;
+
+        carousel.style.transform = `translate3d(-${500 * index}px, 0, 0)`;
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (index === 2) return;
+        index += 1;
+
+        carousel.style.transform = `translate3d(-${500 * index}px, 0, 0)`;
+        });
+    });
+</script>
+
+
 </body>
 </html>
+

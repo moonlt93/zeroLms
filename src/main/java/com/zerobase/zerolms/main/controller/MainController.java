@@ -8,6 +8,9 @@ package com.zerobase.zerolms.main.controller;
 //https:// www.naver.com//new/list.do
 // 클래스 , 속성, 메소드 ?
 
+import com.zerobase.zerolms.admin.dto.BannerDto;
+import com.zerobase.zerolms.admin.model.BannerParam;
+import com.zerobase.zerolms.admin.service.BannerService;
 import com.zerobase.zerolms.components.MailComponents;
 import com.zerobase.zerolms.main.dto.HistoryDto;
 import com.zerobase.zerolms.main.service.LogHistoryService;
@@ -19,12 +22,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -34,13 +39,14 @@ public class MainController {
 
 
     private final MailComponents mailComponents;
-
+    private final BannerService bannerService;
 
     @RequestMapping(value = "/")
-    public String index() {
+    public String index(Model model) {
 
 
-
+      List<BannerDto> detail =  bannerService.getFileRoot();
+        model.addAttribute("home__slider",detail);
         return "index";
 
 

@@ -24,16 +24,9 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
     private final LogHistoryService service;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
 
-
-        // IP, 세션 ID
-        WebAuthenticationDetails web = (WebAuthenticationDetails) authentication.getDetails();
-        System.out.println("IP : " + web.getRemoteAddress());
-        System.out.println("Session ID : " + web.getSessionId());
-
-        // 인증 ID
-        System.out.println("name : " + authentication.getName());
 
 
         HistoryDto dto = new HistoryDto();
@@ -68,3 +61,13 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
             System.out.print(authList.get(i).getAuthority() + " ");
         }
         System.out.println();*/
+
+
+
+  /*      // IP, 세션 ID
+        WebAuthenticationDetails web = (WebAuthenticationDetails) authentication.getDetails();
+        System.out.println("IP : " + web.getRemoteAddress());
+        System.out.println("Session ID : " + web.getSessionId());
+
+        // 인증 ID
+        System.out.println("name : " + authentication.getName());*/
