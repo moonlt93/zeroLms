@@ -67,7 +67,6 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
 
-
                 .and().headers().frameOptions().sameOrigin();
 
         http.exceptionHandling().accessDeniedPage("/error/denied");
@@ -79,23 +78,19 @@ public class SecurityConfiguration {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
-
-        return (web) -> web.ignoring().antMatchers("/resources/**", "/favicon.ico","/files/**"
-                                                 , "/js/**"
-                                                ,"/css/**"
-                                                ,"/banner/**"
-                                               ) ;
+        return (web) -> web.ignoring().mvcMatchers("/resources/**", "/favicon.ico","/files/**"
+                                                 , "/js/**","/css/**","/banner/**"
+                                               );
     }
 
 
-  /*  @Configuration
+    @Configuration
     public static class WebConfig extends WebMvcConfigurationSupport {
-
         @Override
         protected void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
             super.addResourceHandlers(registry);
         }
     }
-*/
+
 }

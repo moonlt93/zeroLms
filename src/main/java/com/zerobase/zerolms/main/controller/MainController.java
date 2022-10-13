@@ -14,6 +14,7 @@ import com.zerobase.zerolms.admin.service.BannerService;
 import com.zerobase.zerolms.components.MailComponents;
 import com.zerobase.zerolms.main.dto.HistoryDto;
 import com.zerobase.zerolms.main.service.LogHistoryService;
+import com.zerobase.zerolms.member.entity.Member;
 import com.zerobase.zerolms.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,7 @@ public class MainController {
 
       List<BannerDto> detail =  bannerService.getFileRoot();
         model.addAttribute("home__slider",detail);
+
         return "index";
 
 

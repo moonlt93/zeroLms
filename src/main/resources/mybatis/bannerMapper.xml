@@ -5,7 +5,7 @@
 <mapper namespace="com.zerobase.zerolms.admin.mapper.BannerMapper">
 
    <select id="selectList" resultType="com.zerobase.zerolms.admin.dto.BannerDto">
-    select * from banner;
+    select * from banner order by sort_values desc;
    </select>
 
 
