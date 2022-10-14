@@ -48,7 +48,6 @@ public class MainController {
 
       List<BannerDto> detail =  bannerService.getFileRoot();
         model.addAttribute("home__slider",detail);
-
         return "index";
 
 
