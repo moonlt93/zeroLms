@@ -1,7 +1,5 @@
 package com.zerobase.zerolms.main.dto;
 
-import com.zerobase.zerolms.admin.dto.CategoryDto;
-import com.zerobase.zerolms.admin.entity.Category;
 import com.zerobase.zerolms.main.entity.LoginHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor

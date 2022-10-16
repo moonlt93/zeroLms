@@ -1,23 +1,16 @@
 package com.zerobase.zerolms.course.service;
 
-import com.zerobase.zerolms.course.dto.CourseDto;
 import com.zerobase.zerolms.course.dto.TakeCourseDto;
-import com.zerobase.zerolms.course.entity.Course;
 import com.zerobase.zerolms.course.entity.TakeCourse;
 import com.zerobase.zerolms.course.entity.TakeCourseCode;
-import com.zerobase.zerolms.course.mapper.CourseMapper;
 import com.zerobase.zerolms.course.mapper.TakeCourseMapper;
-import com.zerobase.zerolms.course.model.*;
-import com.zerobase.zerolms.course.repository.CourseRepository;
+import com.zerobase.zerolms.course.model.ServiceResult;
+import com.zerobase.zerolms.course.model.TakeCourseParam;
 import com.zerobase.zerolms.course.repository.TakeCourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

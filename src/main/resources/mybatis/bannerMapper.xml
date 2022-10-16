@@ -16,6 +16,7 @@
     <select id="selectImagePath" resultType="com.zerobase.zerolms.admin.dto.BannerDto">
         SELECT *
         FROM banner
-        WHERE banner_status='MAIN';
+        WHERE banner_status='MAIN'
+        order by sort_values ASC;
     </select>
 </mapper>

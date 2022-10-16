@@ -16,16 +16,6 @@ public class MailComponents {
 
   private final  JavaMailSender javaMailSender;
 
-public void sendMailTest(){
-
-    SimpleMailMessage msg = new SimpleMailMessage();
-    msg.setTo("moonlt93@naver.com");
-    msg.setSubject("안녕하세요 제가 보내는 메일입니다.");
-    msg.setText("안녕하세요 반갑습니다.");
-
-    javaMailSender.send(msg);
-}
-
 public boolean sendMail(String mail, String subject, String text){
 
     boolean result =false;

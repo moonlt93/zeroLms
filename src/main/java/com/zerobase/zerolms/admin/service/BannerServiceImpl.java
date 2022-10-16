@@ -5,15 +5,10 @@ import com.zerobase.zerolms.admin.entity.Banner;
 import com.zerobase.zerolms.admin.mapper.BannerMapper;
 import com.zerobase.zerolms.admin.model.BannerParam;
 import com.zerobase.zerolms.admin.repository.BannerRepository;
-import com.zerobase.zerolms.course.entity.Course;
-import com.zerobase.zerolms.course.entity.TakeCourse;
-import com.zerobase.zerolms.member.entity.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -42,7 +37,7 @@ public class BannerServiceImpl implements BannerService{
                 .bannerLink(param.getBannerLink())
                 .bannerName(param.getBannerName())
                 .bannerStatus(param.getBannerStatus())
-                .bannerYn(true)
+                .bannerYn(param.isBannerYn())
                 .sortValues(param.getSortValues())
                 .regDt(LocalDateTime.now())
                 .bannerFileLink(param.getBannerFileLink())
@@ -137,8 +132,6 @@ public class BannerServiceImpl implements BannerService{
 
     @Override
     public List<BannerDto> getFileRoot() {
-
-
 
         return bannerMapper.selectImagePath();
     }

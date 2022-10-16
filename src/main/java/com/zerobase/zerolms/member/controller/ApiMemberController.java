@@ -6,9 +6,7 @@ import com.zerobase.zerolms.course.dto.TakeCourseDto;
 import com.zerobase.zerolms.course.model.ServiceResult;
 import com.zerobase.zerolms.course.model.TakeCourseInput;
 import com.zerobase.zerolms.course.service.TakeCourseService;
-import com.zerobase.zerolms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +19,6 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class ApiMemberController {
 
-    private final MemberService memberService;
     private final TakeCourseService takeCourseService;
 
     @PostMapping("/api/member/course/cancel")

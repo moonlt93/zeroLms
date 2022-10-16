@@ -3,8 +3,6 @@ package com.zerobase.zerolms.admin.model;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class BannerParam {
 

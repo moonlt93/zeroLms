@@ -1,11 +1,7 @@
 package com.zerobase.zerolms.admin.controller;
 
 import com.zerobase.zerolms.admin.dto.BannerDto;
-import com.zerobase.zerolms.admin.dto.CategoryDto;
 import com.zerobase.zerolms.admin.model.BannerParam;
-import com.zerobase.zerolms.admin.model.CategoryInput;
-import com.zerobase.zerolms.admin.model.MemberAdInput;
-import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.admin.service.BannerService;
 import com.zerobase.zerolms.admin.service.CategoryService;
 import com.zerobase.zerolms.course.model.CourseInput;
@@ -13,11 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +47,6 @@ public class AdminBannerController {
     public String GetPicAdd(Model model, BannerParam param, HttpServletRequest req
             , MultipartFile file) {
 
-        /*        model.addAttribute("list",bannerService.selectList(param));*/
 
         boolean isEdit = req.getRequestURI().contains("/edit");
         BannerDto banner = new BannerDto();
@@ -86,8 +79,7 @@ public class AdminBannerController {
             String baseUrlPath = "/banner";
 
 
-
-                String[] arrFileName = getNewSaveFile(baseUrlPath, baseLocalPath, originalFileName);
+            String[] arrFileName = getNewSaveFile(baseUrlPath, baseLocalPath, originalFileName);
 
 
             bannerFile = arrFileName[0];
@@ -127,54 +119,68 @@ public class AdminBannerController {
 
     }
 
-    private String[] getNewSaveFile(String baseUrlPath,String baseLocalPath,String OriginalName){
+    private String[] getNewSaveFile(String baseUrlPath, String baseLocalPath, String OriginalName) {
         LocalDate now = LocalDate.now();
 
         String[] dirs = {
-                String.format("%s/%d/", baseLocalPath,now.getYear()),
-                String.format("%s/%d/%02d/", baseLocalPath, now.getYear(),now.getMonthValue()),
+                String.format("%s/%d/", baseLocalPath, now.getYear()),
+                String.format("%s/%d/%02d/", baseLocalPath, now.getYear(), now.getMonthValue()),
                 String.format("%s/%d/%02d/%02d/", baseLocalPath, now.getYear(), now.getMonthValue(), now.getDayOfMonth())};
 
         String urlDir = String.format("%s/%d/%02d/%02d/", baseUrlPath, now.getYear(), now.getMonthValue(), now.getDayOfMonth());
 
-        for (String dir: dirs){
+        for (String dir : dirs) {
             File file = new File(dir);
-            if(!file.isDirectory()){
+            if (!file.isDirectory()) {
                 //디렉토리가 없으면 생성
                 file.mkdir();
             }
         }
 
 
-        String fileExtension=" ";
-        if(OriginalName != null){
+        String fileExtension = " ";
+        if (OriginalName != null) {
             int dotPos = OriginalName.lastIndexOf(".");
-            if(dotPos > -1){
-                fileExtension =OriginalName.substring(dotPos+1);
+            if (dotPos > -1) {
+                fileExtension = OriginalName.substring(dotPos + 1);
             }
         }
-        String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        String newFilename= String.format("%s%s",dirs[2],uuid);
-        String urlFilename = String.format("%s%s",urlDir,uuid);
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String newFilename = String.format("%s%s", dirs[2], uuid);
+        String urlFilename = String.format("%s%s", urlDir, uuid);
 
-        if(fileExtension.length()>0){
-            newFilename+="."+fileExtension;
-            urlFilename+="."+fileExtension;
+        if (fileExtension.length() > 0) {
+            newFilename += "." + fileExtension;
+            urlFilename += "." + fileExtension;
         }
 
-        return new String []{newFilename,urlFilename};
+        return new String[]{newFilename, urlFilename};
 
     }
 
 
     @PostMapping("/admin/banner/status")
-    public String status(Model model, BannerParam param){
+    public String status(Model model, BannerParam param) {
 
-        boolean result= bannerService.updateStatus(param.getBannerStatus(),param.getId());
+        boolean result = bannerService.updateStatus(param.getBannerStatus(), param.getId());
 
 
-        return "redirect:/admin/banner/edit?id="+param.getId();
+        return "redirect:/admin/banner/edit?id=" + param.getId();
     }
+
+
+
+    @PostMapping("/admin/banner/delete")
+    public String deleteSubmit(Model model, CourseInput param
+            ,HttpServletRequest req) {
+
+
+        boolean result =bannerService.del(param.getIdList());
+
+
+        return "redirect:/admin/banner/list";
+    }
+
 
 }
 

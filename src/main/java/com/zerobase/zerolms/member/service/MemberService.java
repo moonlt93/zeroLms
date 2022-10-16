@@ -3,7 +3,6 @@ package com.zerobase.zerolms.member.service;
 import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.course.model.ServiceResult;
-import com.zerobase.zerolms.member.entity.Member;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
 import org.springframework.security.core.userdetails.UserDetailsService;

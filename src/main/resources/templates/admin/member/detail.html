@@ -82,9 +82,9 @@
                         <input th:value="${member.userId}" name="userId"
                                type="hidden"/>
                         <select name="userStatus">
-                            <option value="REQ">가입승인중</option>
-                            <option value="ING">이용중</option>
-                            <option value="STOP">가입정지</option>
+                            <option value="REQ" th:selected="${member.userStatus =='REQ'}">가입승인중</option>
+                            <option value="ING" th:selected="${member.userStatus =='ING'}">이용중</option>
+                            <option value="STOP" th:selected="${member.userStatus =='STOP'}">가입정지</option>
                         </select>
                         <button type="submit">상태변경</button>
                     </form>

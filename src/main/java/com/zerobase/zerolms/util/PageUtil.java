@@ -74,11 +74,6 @@ public class PageUtil {
 
         init();
 
-        //System.out.println("=====페이징 출력!!!");
-        //System.out.println("한페이지 개수: " + pageSize + ", 페이지블럭 개수: " + pageBlockSize);
-        //System.out.println(String.format("%d/%d (%d)", pageIndex, totalBlockCount, totalCount));
-        //System.out.println(String.format("%d - %d", startPage, endPage));
-
         StringBuilder sb = new StringBuilder();
 
         long previousPageIndex = startPage > 1 ? startPage - 1 : 1;

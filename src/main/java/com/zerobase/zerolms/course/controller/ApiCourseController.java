@@ -7,7 +7,6 @@ import com.zerobase.zerolms.course.model.TakeCourseInput;
 import com.zerobase.zerolms.course.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

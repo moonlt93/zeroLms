@@ -3,6 +3,7 @@ package com.zerobase.zerolms.configuration;
 import com.zerobase.zerolms.main.service.LogHistoryService;
 import com.zerobase.zerolms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @RequiredArgsConstructor
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity(debug = false) // 스프링 시큐리티 필터가 스프링 필터 체임에 등록이 된다.
 @Configuration
 public class SecurityConfiguration {
 
@@ -25,12 +26,12 @@ public class SecurityConfiguration {
 
 
     @Bean
-    UserAuthenticationFailureHandler getFailureHandler(){
-       return new UserAuthenticationFailureHandler();
+    UserAuthenticationFailureHandler getFailureHandler() {
+        return new UserAuthenticationFailureHandler();
     }
 
     @Bean
-    UserLoginSuccessHandler getSuccessHandler(){
+    UserLoginSuccessHandler getSuccessHandler() {
         return new UserLoginSuccessHandler(logHistoryService);
     }
 
@@ -43,8 +44,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-       http.csrf().disable();
-       http.headers().frameOptions().sameOrigin();
+        http.csrf().disable();
+        http.headers().frameOptions().sameOrigin();
         http.authorizeRequests()
                 .antMatchers("/admin/**")
                 .hasAnyAuthority("ROLE_ADMIN");
@@ -52,20 +53,22 @@ public class SecurityConfiguration {
                 .antMatchers(
                         "/"
                         , "/member/register"
-                        ,"/member/email-auth"
-                        ,"/member/find/password"
-                        ,"/member/reset/password"
-                        )
+                        , "/member/email-auth"
+                        , "/member/find/password"
+                        , "/member/reset/password"
+                        ,"/banner/**"
+
+                )
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/member/login")
-                                .successHandler(getSuccessHandler())
-                                .failureHandler(getFailureHandler())
-                                        .permitAll()
+                .successHandler(getSuccessHandler())
+                .failureHandler(getFailureHandler())
+                .permitAll()
                 .and().logout().logoutRequestMatcher(
                         new AntPathRequestMatcher("/member/logout"))
-                        .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true)
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
 
                 .and().headers().frameOptions().sameOrigin();
 
@@ -74,13 +77,12 @@ public class SecurityConfiguration {
     }
 
 
-
+    // 웹 ignore 설정
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
-        return (web) -> web.ignoring().mvcMatchers("/resources/**", "/favicon.ico","/files/**"
-                                                 , "/js/**","/css/**","/banner/**"
-                                               );
+        return (web) -> web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
 

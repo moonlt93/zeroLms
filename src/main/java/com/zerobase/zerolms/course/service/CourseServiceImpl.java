@@ -3,7 +3,6 @@ package com.zerobase.zerolms.course.service;
 import com.zerobase.zerolms.course.dto.CourseDto;
 import com.zerobase.zerolms.course.entity.Course;
 import com.zerobase.zerolms.course.entity.TakeCourse;
-import com.zerobase.zerolms.course.entity.TakeCourseCode;
 import com.zerobase.zerolms.course.mapper.CourseMapper;
 import com.zerobase.zerolms.course.model.CourseInput;
 import com.zerobase.zerolms.course.model.CourseParam;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

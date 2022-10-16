@@ -1,12 +1,7 @@
 package com.zerobase.zerolms.course.controller;
 
-import com.zerobase.zerolms.admin.dto.CategoryDto;
-import com.zerobase.zerolms.admin.model.CategoryInput;
-import com.zerobase.zerolms.admin.model.MemberParam;
-import com.zerobase.zerolms.admin.service.CategoryService;
 import com.zerobase.zerolms.course.dto.CourseDto;
 import com.zerobase.zerolms.course.dto.TakeCourseDto;
-import com.zerobase.zerolms.course.model.CourseParam;
 import com.zerobase.zerolms.course.model.ServiceResult;
 import com.zerobase.zerolms.course.model.TakeCourseParam;
 import com.zerobase.zerolms.course.service.CourseService;
@@ -19,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor

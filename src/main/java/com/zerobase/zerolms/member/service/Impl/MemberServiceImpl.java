@@ -15,7 +15,6 @@ import com.zerobase.zerolms.member.repository.MemberRepository;
 import com.zerobase.zerolms.member.service.MemberService;
 import com.zerobase.zerolms.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
