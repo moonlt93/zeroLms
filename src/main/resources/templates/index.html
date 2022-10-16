@@ -132,6 +132,13 @@
                 autoSlider = setInterval(slideRight, 3000);
             }
         );
+
+        $('#loginAl').one('click',function(){
+
+            if(!confirm("강좌메뉴로 이동하시겠습니까?")){
+                return false;
+            }
+        });
     });//DOCUMENT READY
 
 </script>
