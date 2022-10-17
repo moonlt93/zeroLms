@@ -56,7 +56,7 @@ public class SecurityConfiguration {
                         , "/member/email-auth"
                         , "/member/find/password"
                         , "/member/reset/password"
-                        ,"/banner/**"
+
 
                 )
                 .permitAll()
@@ -82,17 +82,11 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
+                .mvcMatchers("/favicon.ico")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
 
-    @Configuration
-    public static class WebConfig extends WebMvcConfigurationSupport {
-        @Override
-        protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-            super.addResourceHandlers(registry);
-        }
-    }
+
 
 }
